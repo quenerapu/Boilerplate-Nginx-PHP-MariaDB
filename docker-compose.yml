@@ -1,21 +1,32 @@
 services:
-  web:
-    build: .
-    image: localhost/${PROJECT_NAME}_web_image:latest
-    container_name: ${PROJECT_NAME}_web
+  # 1. SERVIDOR WEB (NGINX)
+  nginx:
+    image: nginx:alpine
+    container_name: ${PROJECT_NAME}_nginx
     restart: unless-stopped
     ports:
       - "8080:80"   # HTTP
       - "8443:443"  # HTTPS
     volumes:
       - ./:/var/www/html
-      - ./certs:/etc/apache2/certs
-    environment:
-      - APACHE_DOCUMENT_ROOT=/var/www/html
+      - ./.podman/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./certs:/etc/nginx/certs
+    depends_on:
+      - php
+
+  # 2. INTÉRPRETE PHP (FPM)
+  php:
+    build: .
+    image: localhost/${PROJECT_NAME}_php_fpm:latest
+    container_name: ${PROJECT_NAME}_php
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
     depends_on:
       db:
         condition: service_healthy
 
+  # 3. BASE DE DATOS
   db:
     image: docker.io/library/mariadb:10.11
     container_name: ${PROJECT_NAME}_db
