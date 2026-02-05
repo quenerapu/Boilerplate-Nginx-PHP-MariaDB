@@ -7,9 +7,10 @@ Just add water.
 3. Clona este repositorio en tu máquina
 4. Abre tu terminal (Terminal en Linux o macOS, PowerShell en Windows), ve a la carpeta donde has descargado este repositorio
 5. Dentro del directorio certs ejecuta `mkcert localhost 127.0.0.1 ::1` para crear los certificados `localhost+2.pem` y `localhost+2-key.pem`
-6. Dentro dle directorio principal (donde están `Dockerfile` y `docker-compose.yml`), ejecuta `podman compose up`
-7. Mira si funciona `https://localhost:8443`
-8. Hala, construye algo chulo
+6. Edita .env y cambia `whatever` por lo que quieras
+7. Dentro del directorio principal (donde están `Dockerfile` y `docker-compose.yml`), ejecuta `podman compose up`
+8. Mira si funciona `https://localhost:8443`
+9. Hala, construye algo chulo
 
 ¿Dudas? [Pregúntale a Gemini].
 
